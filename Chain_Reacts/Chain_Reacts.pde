@@ -10,8 +10,8 @@ void setup() {
 
   for (int i =0; i< balls.length; i++) {
     //print("looptity loop");
-    balls[i] = new Ball();
-   ellipse(balls[i].xPos, balls[i].yPos, 20, 20);
+    balls[i] = new Ball(0);
+   ellipse(balls[i].x, balls[i].y, balls[i].rad, balls[i].rad);
   }
   background(0);
 }
@@ -20,8 +20,13 @@ void draw() {
   clear();
   //print("draw");
   for (Ball pew : balls) {
-    fill(pew.colorR, pew.colorB, pew.colorG);
-    pew.move();
-    ellipse(pew.xPos, pew.yPos, 20, 20);
+    fill(pew.c);
+    pew.check();
+    if(pew.state != Ball.DEAD)
+      ellipse(pew.x, pew.y, pew.rad, pew.rad);
   }
+}
+
+void mouseClicked(){
+    
 }

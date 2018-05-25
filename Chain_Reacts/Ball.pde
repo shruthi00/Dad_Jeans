@@ -2,60 +2,82 @@
  APCS pd8
  HW 52 -- Grow and Shrink
  2018-05-22*/
-class Ball{
-int diameter;
-int hasBeenPressed; //an int that allows for before clicking, after one click, and after a second click
-//rbg color numbers so it can rotate through colors
-float speed;
-int colorR; 
-int colorB;
-int colorG;
-int xPos;
-int yPos;
-int xMove;
-int yMove;
+class Ball {
 
-Ball() {
-  //println("first line of constructor");
-  diameter = 20; //sets base diameter to 20
-  //sets colors to 3 random ints
-  colorR = (int(random(255)));
-  colorB = (int(random(255)));
-  colorG = (int(random(255)));
+  final static int MOVING =0;
+  final static int GROWING =1;
+  final static int SHRINKING =2;
+  final static int DEAD =3;
+  final float CHANGE_FACTOR =.25;
+  final float MAX_RADIUS =50;
 
-  xPos = int(random(300))+150; 
-  //print("x: "+xPos);
-  yPos = int(random(300))+150;
- // print("y: "+yPos); //these print statements helped to determine that code was not running through constructor correctly
-  xMove = (int)(random(5))+1;
-  yMove = (int)(random(5))+1;
+  int hasBeenPressed; //an int that allows for before clicking, after one click, and after a second click
+  //rbg color numbers so it can rotate through colors
+  float rad;
+  color c;
+  float x;
+  float y;
+  float dx;
+  float dy;
+  int state;
 
-}
 
-void move() {
-  
- //println("moving");
-  if (xPos>590) {
-    xPos=xPos-int(random(10));
-    xMove*=-1;
+
+  Ball(int inputState) {
+    //println("first line of constructor");
+    rad = random(30)+10; //sets base diameter to 20
+    //sets colors to 3 random ints
+    int colorR = (int(random(255)));
+    int colorB = (int(random(255)));
+    int colorG = (int(random(255)));
+    c=color(colorR, colorB, colorG); 
+    x = random(600); 
+    //print("x: "+x);
+    y = random(600);
+    // print("y: "+y); //these print statements helped to determine that code was not running through constructor correctly
+    dx =(random(10))-5;
+    dy =(random(10))-5;
+    state=0;
+    state = inputState;
   }
-  else if (xPos<10){
-    xPos=xPos+int(random(10));
-    xMove *=-1;
+
+  void check() {
+    if (state==MOVING) {
+      move();
+    } else if (state==GROWING) {
+      if (rad >49.75) {//max rad - change factor
+        state=SHRINKING;
+      } else {
+        rad+=CHANGE_FACTOR;
+      }
+    } else if (state == SHRINKING) {
+      if (rad<CHANGE_FACTOR) {
+        state = DEAD;
+      } else {
+        rad -=CHANGE_FACTOR;
+      }
+    }
   }
-  else {
-    xPos+=xMove;
+  void move() {
+
+    //println("moving");
+    if (x>590) {
+      x=x-int(random(10));
+      dx*=-1;
+    } else if (x<10) {
+      x=x+int(random(10));
+      dx *=-1;
+    } else {
+      x+=dx;
+    }
+    if (y>590) {
+      y=y-int(random(10));
+      dy*=-1;
+    } else if (y<10) {
+      y=y+int(random(10));
+      dy *=-1;
+    } else {
+      y+=dy;
+    }
   }
-  if (yPos>590) {
-    yPos=yPos-int(random(10));
-    yMove*=-1;
-  }
-  else if (yPos<10){
-    yPos=yPos+int(random(10));
-    yMove *=-1;
-  }
-  else {
-    yPos+=yMove;
-  }
-}
 }
