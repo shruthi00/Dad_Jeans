@@ -23,9 +23,9 @@ class Ball {
 
 
 
-  Ball(int inputState) {
+  Ball() {
     //println("first line of constructor");
-    rad = random(30)+10; //sets base diameter to 20
+    rad = random(20)+5; //sets base diameter to 20
     //sets colors to 3 random ints
     int colorR = (int(random(255)));
     int colorB = (int(random(255)));
@@ -38,14 +38,25 @@ class Ball {
     dx =(random(10))-5;
     dy =(random(10))-5;
     state=0;
+
+  }
+  
+  Ball(int inputState) {
+    this();
     state = inputState;
+  }
+  
+  Ball(int inputState,float inputx, float inputy) {
+    this(inputState);
+    x=inputx;
+    y=inputy;
   }
 
   void check() {
     if (state==MOVING) {
       move();
     } else if (state==GROWING) {
-      if (rad >49.75) {//max rad - change factor
+      if (rad >(MAX_RADIUS)-CHANGE_FACTOR) {//max rad - change factor
         state=SHRINKING;
       } else {
         rad+=CHANGE_FACTOR;
@@ -61,19 +72,20 @@ class Ball {
   void move() {
 
     //println("moving");
-    if (x>590) {
+    
+    if (x>(600-rad)) {
       x=x-int(random(10));
       dx*=-1;
-    } else if (x<10) {
+    } else if (x<rad) {
       x=x+int(random(10));
       dx *=-1;
     } else {
       x+=dx;
     }
-    if (y>590) {
+    if (y>(600-rad)) {
       y=y-int(random(10));
       dy*=-1;
-    } else if (y<10) {
+    } else if (y<rad) {
       y=y+int(random(10));
       dy *=-1;
     } else {
