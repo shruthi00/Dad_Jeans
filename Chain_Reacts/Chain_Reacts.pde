@@ -37,6 +37,8 @@ void draw() {
 }
 
   boolean inRange(Ball one, Ball two) {
+    
+    /*  ORIGINAL CODE, BASICALLY JUST A SQUARE AROUND THE CIRCLE
     float maxXOne=one.x+ abs(one.rad);
     float minXOne=one.x-abs(one.rad);
     float maxYOne=one.y+abs(one.rad);
@@ -51,6 +53,9 @@ void draw() {
       }
     }
     return false;
+    */
+    
+    return (sqrt(pow((float)one.x-two.x,2)+pow((float)one.y-two.y,2))) <= (one.rad+two.rad);
   }
 
   void mouseClicked() {
